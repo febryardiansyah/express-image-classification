@@ -1,50 +1,50 @@
-# Image Classification : Machine Learning in Node.js with TensorFlow.js
-A simple example on Image Classification in Node.js with TensorFlow.js
-
-#### Check out the [Medium Post](https://medium.com/@happytejasrathod/image-classification-machine-learning-in-node-js-with-tensorflow-js-dd8e20ba5024) for detailed explanation.
-
-## Getting Started
-With current Machine Learning Tutorials running towards Python and TensorFlow, I was finding a route in a language which is close to my work, as it has so much use in life than other languages, the language I am talking about is JavaScript. From Back-End Servers (Node.js) to Front-End Web (React) and even Mobile-Platforms (React-Native), JavaScript is a language that is being used by many coding geeks and to learning a whole new language, just for machine learning is tiresome for any programmer. So I thought to bring machine learning to my own space and my language.
-
->Sure, it's a challenge but why not to take a different path.
+# Machine Learning in Expressjs with TensorFlow.js
+A simple example on Image Classification in Expressjs using TensorFlow.js.
+TensorFlow is an end-to-end open source platform for machine learning. It has a comprehensive, flexible ecosystem of tools, libraries and community resources that lets researchers push the state-of-the-art in ML and developers easily build and deploy ML powered applications.
 
 ## Installation
 
-Open it in GitHub Desktop or git clone the repository or download the zip & extract the project.
+1.  Clone this repository
+```
+git clone https://github.com/febryardiansyah/express-image-classification
+```
 
-Open the terminal in the project folder and type `npm install`.
+2. Install dependencies
+```
+npm install
+```
+
+3. Run server
+use `npm run start` or `npm run dev`
 
 ## Testing
+You can use api tester such as [Postman](https://www.postman.com/downloads/) and open http://localhost:3000/ with `Post` method.
+Then, select menu `Body` and choose `form-data`. Input `image` as key and change to `file`, then for value you can choose image from
+your directory.
 
-Go to the project folder, and Open the Terminal to that path.
+For exemple, i'm using this image https://www.humanesociety.org/sites/default/files/styles/1240x698/public/2019/03/rabbit-475261_0.jpg?h=c855054e&itok=lfjXk4-x
+![](https://www.humanesociety.org/sites/default/files/styles/1240x698/public/2019/03/rabbit-475261_0.jpg?h=c855054e&itok=lfjXk4-x)
 
-I have added an image that I have clicked and uploaded it in the repository. It’s an image of a Cute Baby Rabbit. You can use any image you have, just paste it in the project folder and give the name as the argument.
+- The result will be shown in Postman as :
 
-<img src="https://github.com/tejas77/node-image-classification/blob/master/rabbit.jpg" height="400" width="300">
-
-- Run the file **_(classify.js)_** with an image file as an argument.
-
-```
-node classify.js rabbit.jpg
-```
-
-- The result will be shown in the Terminal as :
-```
-Classification Results: [
-  {
-    className: 'Angora, Angora rabbit',
-    probability: 0.9488762617111206
-  },
-  { className: 'hamster', probability: 0.023957064375281334 },
-  {
-    className: 'guinea pig, Cavia cobaya',
-    probability: 0.016880817711353302
-  }
+```json
+[
+    {
+        "className": "Angora, Angora rabbit",
+        "probability": 0.781345784664154
+    },
+    {
+        "className": "wood rabbit, cottontail, cottontail rabbit",
+        "probability": 0.11294354498386383
+    },
+    {
+        "className": "hare",
+        "probability": 0.09289330244064331
+    }
 ]
 ```
 
-### Thank you
-- Give a star if you find this repository helpful.
-## Author 
+![](https://media.discordapp.net/attachments/293767021030670356/758965683677298688/unknown.png?width=1326&height=951)
 
-* **Tejas Rathod** - [@tejas77](https://github.com/tejas77)
+## Contribute
+Contributors of any kind are welcome. Share your awesome improvements in a pull request and join our mission to make Machine Learning more affordable & accessible!

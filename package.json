@@ -4,13 +4,16 @@
   "description": "A simple example on Image Classification in Node.js with TensorFlow.js",
   "main": "classify.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node classify.js",
+    "dev": "nodemon classify.js"
   },
   "author": "Tejas Rathod",
   "license": "ISC",
   "dependencies": {
     "@tensorflow-models/mobilenet": "^2.0.4",
     "@tensorflow/tfjs": "^1.2.10",
-    "@tensorflow/tfjs-node": "^1.2.10"
+    "@tensorflow/tfjs-node": "^1.2.10",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.2.0"
   }
 }
