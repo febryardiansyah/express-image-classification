@@ -13,6 +13,8 @@
     "@tensorflow-models/mobilenet": "^2.0.4",
     "@tensorflow/tfjs": "^1.2.10",
     "@tensorflow/tfjs-node": "^1.2.10",
+    "axios": "^0.20.0",
+    "cheerio": "^1.0.0-rc.3",
     "express": "^4.17.1",
     "express-fileupload": "^1.2.0"
   }

@@ -16,6 +16,9 @@ const tfnode = require("@tensorflow/tfjs-node");
 const fs = require("fs");
 const path = require("path");
 
+const axios = require("axios").default;
+const cheerio = require("cheerio")
+
 //changing image name to date
 const imageName = require("./src/helpers/imageName");
 
@@ -29,6 +32,18 @@ app.use(fileUpload());
 
 //post method
 app.post("/", async (req, res) => {
+  const PetSpecies = [];
+
+    try {
+      const response = await axios.get('https://dogtime.com/dog-breeds/profiles')
+      const $ = cheerio.load(response.data)
+      $('.article-crumbs > .list-item').map((i,el)=>{
+        PetSpecies.push($(el).text())
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  
   if(!req.files){
     return res.send('image must not be empty')
   }
@@ -38,7 +53,7 @@ app.post("/", async (req, res) => {
 
     await image.mv(`./src/images/${fileName}`);
     const imagePath = path.join(`./src/images/${fileName}`);
-    const result = await imageClassification(imagePath);
+    const result = await imageClassification(imagePath,PetSpecies);
     return res.send(result);
   } catch (error) {
     return res.send(error);
@@ -60,7 +75,7 @@ const readImage = (imagePath) => {
   return tfimage;
 };
 
-const imageClassification = async (imagePath) => {
+const imageClassification = async (imagePath,PetSpecies) => {
   const image = readImage(imagePath);
   return new Promise(async(resolve, reject) => {
     try {
@@ -68,16 +83,35 @@ const imageClassification = async (imagePath) => {
       const mobilenetModel = await mobilenet.load();
       // Classify the image.
       const predictions = await mobilenetModel.classify(image);
-      console.log("Classification Results:", predictions);
-      // const result = predictions.map((p) => {
-      //   if (p.className.includes("cat") || p.className.includes("dog")) {
-      //     return true;
-      //   }
-      //   return false;
-      // });
+      // console.log("Classification Results:", predictions);
+      const name1 = nameCase(predictions[0].className.toString());
+      const name2 = nameCase(predictions[1].className.toString());
+      const name3 = nameCase(predictions[2].className.toString());
+      // let result = PetSpecies.some(i => i === name1 || name2 === name3)
+    //   console.log(PetSpecies);
+      let result = false;
+      for(let i of PetSpecies){
+        if(name1.search(i) !== -1 || name2.search(i) !== -1 || name3.search(i) !== -1){
+            result = true;
+            break;
+        }
+        if(name1.includes('Cat') || name2.includes('Cat') || name3.includes('Cat')){
+            result = true;
+            break;
+          }
+      }
+      console.log(` ------ \n${result}`);
       return resolve(predictions);
     } catch (error) {
       return reject(error)
     }
   })
 };
+
+const nameCase = (name) =>{
+  var splitName = name.toLowerCase().split(' ')
+  for(let i = 0; i < splitName.length;i++){
+    splitName[i] = splitName[i].charAt(0).toUpperCase() + splitName[i].substring(1)
+  }
+  return splitName.join(' ')
+}
